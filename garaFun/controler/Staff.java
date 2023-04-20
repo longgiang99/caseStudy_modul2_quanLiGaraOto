@@ -2,7 +2,7 @@ package controler;
 
 public  class Staff {
     protected int codeStaff;
-    protected String salary;
+    protected int salary;
     protected int age;
     protected String name;
     protected Address address;
@@ -11,7 +11,20 @@ public  class Staff {
     public Staff() {
     }
 
-    public Staff(int codeStaff, String salary, int age, String name, Address address, String staffType) {
+    public Staff(int age, String name, String staffType) {
+        this.age = age;
+        this.name = name;
+        this.staffType = staffType;
+    }
+
+    public Staff(int codeStaff, int salary, String name, String staffType) {
+        this.codeStaff = codeStaff;
+        this.salary = salary;
+        this.name = name;
+        this.staffType = staffType;
+    }
+
+    public Staff(int codeStaff, int salary, int age, String name, Address address, String staffType) {
         this.codeStaff = codeStaff;
         this.salary = salary;
         this.age = age;
@@ -28,11 +41,11 @@ public  class Staff {
         this.codeStaff = codeStaff;
     }
 
-    public String getSalary() {
+    public int getSalary() {
         return salary;
     }
 
-    public void setSalary(String salary) {
+    public void setSalary(int salary) {
         this.salary = salary;
     }
 
