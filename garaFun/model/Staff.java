@@ -1,5 +1,7 @@
 package controler;
 
+import model.Address;
+
 public  class Staff {
     protected int codeStaff;
     protected int salary;
