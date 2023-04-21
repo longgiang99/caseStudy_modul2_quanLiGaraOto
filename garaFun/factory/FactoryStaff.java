@@ -1,4 +1,9 @@
-package controler;
+package factory;
+
+import model.Electrician;
+import model.Mechanic;
+import model.Painter;
+import model.Staff;
 
 public class FactoryStaff {
     public Staff getObject(String staffType){

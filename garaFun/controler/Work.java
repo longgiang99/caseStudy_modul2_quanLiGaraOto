@@ -1,15 +1,14 @@
 package controler;
 
+import model.Staff;
+
 import java.util.List;
 
-public interface vali {
+public interface Work {
      void numberCar(int car);
-     void addStaff(List<Staff> staff);
+     void addStaff();
      void display();
      void updateStaff();
-
-     void updateStaff(Staff staff);
-
-     void removeStaff(List<Staff> staff);
+     void removeStaff();
      void salary();
 }
