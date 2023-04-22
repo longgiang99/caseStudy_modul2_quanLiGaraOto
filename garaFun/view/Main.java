@@ -59,7 +59,7 @@ public class Main {
                                 1: cap nhat ma nhan vien.
                                 2: cap nhat luong nhan vien.
                                 3: cap nhat ten nhan vien.
-                                0: quay laij menu chinh.
+                                0: quay lai menu chinh.
                                 """);
                         choice = Integer.parseInt(sc.nextLine());
                         switch (choice){
@@ -67,9 +67,10 @@ public class Main {
                                 managerAll.updateCodeStaff();
                                 break;
                             case 2:
-                                System.out.println("nhap luong moi: ");
-                                int salary = sc.nextInt();
-                                managerAll.updateSalary(salary);
+                                managerAll.updateSalary();
+//                                System.out.println("nhap luong moi: ");
+//                                int newSalary = sc.nextInt();
+//                                managerAll.updateSalary(newSalary);
                                 break;
                             case 0:
                                 checks = false;

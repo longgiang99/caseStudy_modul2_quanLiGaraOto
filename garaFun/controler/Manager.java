@@ -103,13 +103,29 @@ public class Manager extends FactoryStaff implements Work {
         } catch (Exception e) {
         }
     }
+    public void updateSalary(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("hay nhap ma nhan vien can cap nhat luong: ");
+        int codeStaff = scanner.nextInt();
+        try {
+            for (int i = 0; i <listStaff.size() ; i++) {
+                if(listStaff.get(i).getCodeStaff() == codeStaff ){
+                    System.out.println("hay nhap muc luong moi: ");
+                    int newSalary = scanner.nextInt();
+                    listStaff.get(i).setSalary(newSalary);
+                    System.out.println("da thay doi luong thanh: " + newSalary );
+                }
+            }
+        }catch (NumberFormatException e){}
+    }
     public void updateSalary(int newSalary) {
-        Staff staffForUpdate = listStaff.stream()
-                .filter(staff1 -> staff1.getCodeStaff() == staff1.getCodeStaff())
-                .findFirst()
-                .get();
-        staffForUpdate.setSalary(newSalary);
-
+       try {
+           Staff staffForUpdate = listStaff.stream()
+                   .filter(staff1 -> staff1.getCodeStaff() == staff1.getCodeStaff())
+                   .findFirst()
+                   .get();
+           staffForUpdate.setSalary(newSalary);
+       }catch (NumberFormatException e){}
     }
 
     @Override
