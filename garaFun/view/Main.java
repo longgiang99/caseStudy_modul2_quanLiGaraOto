@@ -12,8 +12,9 @@ public class Main {
             System.out.println("""
                     moi nhap lua chon:
                     1: them nhan vien.
-                    2: hien thi danh sach: 
-                    3: xoa mot nhan vien: 
+                    2: hien thi danh sach. 
+                    3: xoa mot nhan vien.
+                    4: cap nhat thong tin nhan vien. 
                     0: thoat chuong trinh.! 
                     """);
             System.out.println("Enter your choice");
@@ -25,7 +26,7 @@ public class Main {
                         System.out.println("""
                             moi nhap lua chon: 
                             1: them nhan vien.
-                            2: update luong nhan vien.                  
+                            2: hien thi danh sach.
                             0: quay lai menu chinh.! 
                             """);
                         choice = Integer.parseInt(sc.nextLine());
@@ -34,10 +35,8 @@ public class Main {
                                 managerAll.addStaff();
                                 break;
                             case 2:
-                                System.out.println("nhap luong moi: ");
-                                int salary = sc.nextInt();
-                                managerAll.updateSalary(salary);
-                                break;
+                                managerAll.display();
+
                             case 0:
                                 check = false;
                                 break;
@@ -51,6 +50,32 @@ public class Main {
                 }
                 case 3 -> {
                     managerAll.removeStaff();
+                }
+                case 4 ->{
+                    boolean checks = true;
+                    while (checks){
+                        System.out.println("""
+                                moi nhap lua chon:
+                                1: cap nhat ma nhan vien.
+                                2: cap nhat luong nhan vien.
+                                3: cap nhat ten nhan vien.
+                                0: quay laij menu chinh.
+                                """);
+                        choice = Integer.parseInt(sc.nextLine());
+                        switch (choice){
+                            case 1:
+                                managerAll.updateCodeStaff();
+                                break;
+                            case 2:
+                                System.out.println("nhap luong moi: ");
+                                int salary = sc.nextInt();
+                                managerAll.updateSalary(salary);
+                                break;
+                            case 0:
+                                checks = false;
+                                break;
+                        }
+                    }
                 }
                 case 0 -> System.exit(0);
             }

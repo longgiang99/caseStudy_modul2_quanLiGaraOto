@@ -1,13 +1,13 @@
 package controler;
 
 import factory.FactoryStaff;
+import model.Address;
 import model.Staff;
+import regex.TypeValidator;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class Manager extends FactoryStaff implements Work {
     List<Staff> listStaff = new ArrayList<>();
@@ -19,65 +19,45 @@ public class Manager extends FactoryStaff implements Work {
     public void addStaff() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("nhap loai nhan vien:  M/ P/ E");
-        String staffType = scanner.nextLine();
+        String staffType;
+       do {
+           staffType = scanner.nextLine();
+           if(checkTypeStaff(staffType) == false){
+               System.out.println("yeu cau nhap dung loai");
+           }
+       }while (checkTypeStaff(staffType) == false);
         System.out.println(" enter name: ");
         String name = scanner.nextLine();
         System.out.println("enter age: ");
         int age = scanner.nextInt();
         System.out.println("enter codeStaff: ");
         int codeStaff = scanner.nextInt();
-
-//        System.out.println(" enter Type");
         FactoryStaff staffFactory = new FactoryStaff();
         Staff staff1 = staffFactory.getObject(staffType);
-        boolean check = false;
-        for(Staff staff: listStaff){
-            if(staff.getCodeStaff() == codeStaff){
-                check = true;
-                break;
-            }
-        }
-        if(check) {
-            System.out.println("da ton tai ma nhan vien nay, vui long nhap ma nhan vien khac");
+        checkCodeStaff(codeStaff);
+        if(checkCodeStaff(codeStaff)) {
+            System.out.println("da ton tai ma nhan vien nay, vui long them lai nhan vien voi ma nhan vien khac");
         }else {
-//                Staff staff2  = new Staff();
             staff1.setName(name);
             staff1.setAge(age);
             staff1.setCodeStaff(codeStaff);
             listStaff.add(staff1);
         }
     }
-
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("id");
-//        int id = scanner.nextInt();
-//        scanner.nextLine();
-//        System.out.println(" enter name ");
-//        String name = scanner.nextLine();
-//        System.out.println("enter age");
-//        int age = scanner.nextInt();
-//        System.out.println(" enter Type");
-//        System.out.println(" M/ P/ E");
-//        String staffType = scanner.nextLine();
-//        Staff staff1 = staffFactory.getObject(staffType);
-//        boolean check = false;
-//        for (Staff staff : listStaff) {
-//            if (staff.getCodeStaff() == id) {
-//                check = true;
-//                break;
-//            }
-//        }if (check){
-//            System.out.println("da ton tai ma nhan vien nay, vui long nhap ma nhan vien khac");
-//        }else {
-//           Staff staff = new Staff();
-//            staff.setName(name);
-//            staff.setAge(age);
-//            staff.setCodeStaff(id);
-//            listStaff.add(staff);
-//        }
-
-
-
+    public boolean checkCodeStaff(int codeStaff){
+        boolean check = false;
+        for(Staff staff: listStaff){
+            if(staff.getCodeStaff() == codeStaff){
+                check = true;
+                break;
+            }
+        }return check;
+    }
+    public  boolean checkTypeStaff(String staffType){
+        TypeValidator typeValidator = new TypeValidator();
+        boolean input = typeValidator.validate(staffType);
+        return input;
+    }
     public void display() {
         for (Staff list : listStaff) {
             System.out.println(list);
@@ -86,9 +66,26 @@ public class Manager extends FactoryStaff implements Work {
 
     @Override
     public void updateStaff() {
-        Staff staffUpdate = listStaff.stream().filter(staff1 -> staff1.getCodeStaff() == staff1.getCodeStaff()).findFirst().get();
+
     }
 
+    public void updateCodeStaff() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("hay nhap ma nhan vien can update code: ");
+        int codeStaff = scanner.nextInt();
+      try {
+          for (int i = 0; i < listStaff.size(); i++) {
+              if (listStaff.get(i).getCodeStaff() == codeStaff) {
+                  System.out.println("hay nhap ma nhan vien moi: ");
+                  int newCodeStaff = scanner.nextInt();
+                  listStaff.get(i).setCodeStaff(newCodeStaff);
+                  System.out.println("da thay doi ma nhan vien tu:" + codeStaff + "sang: " + newCodeStaff );
+              } else {
+                  System.out.println("khong co ma nhan vien nay");
+              }
+          }
+      }catch (IndexOutOfBoundsException e){}
+    }
     @Override
     public void removeStaff() {
         Scanner scanner = new Scanner(System.in);
@@ -112,10 +109,10 @@ public class Manager extends FactoryStaff implements Work {
                 .findFirst()
                 .get();
         staffForUpdate.setSalary(newSalary);
-        updateStaff();
+
     }
 
     @Override
-    public void salary() {
+    public void salarySetup() {
     }
 }
