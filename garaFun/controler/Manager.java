@@ -118,15 +118,45 @@ public class Manager extends FactoryStaff implements Work {
             }
         }catch (NumberFormatException e){}
     }
-    public void updateSalary(int newSalary) {
-       try {
-           Staff staffForUpdate = listStaff.stream()
-                   .filter(staff1 -> staff1.getCodeStaff() == staff1.getCodeStaff())
-                   .findFirst()
-                   .get();
-           staffForUpdate.setSalary(newSalary);
-       }catch (NumberFormatException e){}
+    public void updateAge(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("hay nhap ma nhan vien can cap nhat tuoi: ");
+        int age = scanner.nextInt();
+        try {
+            for (int i = 0; i <listStaff.size() ; i++) {
+                if(listStaff.get(i).getCodeStaff() == age ){
+                    System.out.println("hay nhap tuoi moi: ");
+                    int newAge = scanner.nextInt();
+                    listStaff.get(i).setSalary(newAge);
+                    System.out.println("da thay doi tuoi thanh: " + newAge );
+                }
+            }
+        }catch (NumberFormatException e){}
     }
+ public void updateName(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("hay nhap ma nhan vien can cap nhat name: ");
+        int name = scanner.nextInt();
+        try {
+            for (int i = 0; i <listStaff.size() ; i++) {
+                if(listStaff.get(i).getCodeStaff() == name ){
+                    System.out.println("hay nhap ten moi: ");
+                    int newName = scanner.nextInt();
+                    listStaff.get(i).setSalary(newName);
+                    System.out.println("da thay doi ten thanh: " + newName );
+                }
+            }
+        }catch (NumberFormatException e){}
+    }
+//    public void updateSalary(int newSalary) {
+//       try {
+//           Staff staffForUpdate = listStaff.stream()
+//                   .filter(staff1 -> staff1.getCodeStaff() == staff1.getCodeStaff())
+//                   .findFirst()
+//                   .get();
+//           staffForUpdate.setSalary(newSalary);
+//       }catch (NumberFormatException e){}
+//    }
 
     @Override
     public void salarySetup() {
