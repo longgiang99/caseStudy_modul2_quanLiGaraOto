@@ -2,7 +2,9 @@ package model;
 
 import model.Address;
 
-public  class Staff {
+import java.io.Serializable;
+
+public  class Staff implements Serializable {
     protected int codeStaff;
     protected int salary;
     protected int age;
@@ -85,6 +87,7 @@ public  class Staff {
 
     @Override
     public String toString() {
+//        return "" + '\t' + '\t' + '\t'+ codeStaff + '\t' + '\t' + '\t'+ " " + salary + '\t' + '\t' + '\t'+  " "+ age + '\t' + '\t' + '\t'+  " "+ name+ '\t' + '\t' + '\t'+  " "+ address+ '\t' + '\t' + '\t'+  " "+ staffType   ;
         return "Staff{" +
                 "codeStaff=" + codeStaff +
                 ", salary='" + salary + '\'' +

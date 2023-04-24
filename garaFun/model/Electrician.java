@@ -24,6 +24,6 @@ public class Electrician extends Staff {
                 ", name='" + name + '\'' +
                 ", address=" + address +
                 ", staffType='" + staffType + '\'' +
-                '}';
+                '}'+"\n";
     }
 }

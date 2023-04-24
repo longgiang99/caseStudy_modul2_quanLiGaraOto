@@ -1,10 +1,17 @@
 package view;
 
 import controler.Manager;
+import model.Staff;
+import storage.ReadToFile;
+import storage.WriterToFile;
 
+import java.util.List;
 import java.util.Scanner;
 public class Main {
+    private static List<Staff> listStaff;
+
     public static void main(String[] args) {
+
         Manager managerAll = new Manager();
         Scanner sc =new Scanner(System.in);
         int choice = 0;
@@ -15,6 +22,9 @@ public class Main {
                     2: hien thi danh sach. 
                     3: xoa mot nhan vien.
                     4: cap nhat thong tin nhan vien. 
+                    5: luu.
+                    6: sap xep theo tuoi.
+                    7: tim nhan vien theo ten.
                     0: thoat chuong trinh.! 
                     """);
             System.out.println("Enter your choice");
@@ -60,6 +70,7 @@ public class Main {
                                 2: cap nhat luong nhan vien.
                                 3: cap nhat ten nhan vien.
                                 4: cap nhat tuoi nhan vien.
+                                5: cap nhat dia chi nhan vien.
                                 0: quay lai menu chinh.
                                 """);
                         choice = Integer.parseInt(sc.nextLine());
@@ -68,10 +79,10 @@ public class Main {
                                 managerAll.updateCodeStaff();
                                 break;
                             case 2:
-                                managerAll.updateSalary();
+//                                managerAll.updateSalary();
 //                                System.out.println("nhap luong moi: ");
 //                                int newSalary = sc.nextInt();
-//                                managerAll.updateSalary(newSalary);
+                                managerAll.updateSalary();
                                 break;
                             case 3:
                                 managerAll.updateName();
@@ -79,11 +90,22 @@ public class Main {
                             case 4:
                                 managerAll.updateAge();
                                 break;
+                            case 5:
+                                managerAll.updateAdrress();
                             case 0:
                                 checks = false;
                                 break;
                         }
                     }
+                }
+                case 5 ->{
+                    managerAll.saveListStaff();
+                }
+                case 6 ->{
+                    managerAll.sortToAge();
+                }
+                case 7 -> {
+                    managerAll.findToName();
                 }
                 case 0 -> System.exit(0);
             }

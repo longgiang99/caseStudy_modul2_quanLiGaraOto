@@ -26,6 +26,6 @@ public class Painter extends Staff {
                 ", name='" + name + '\'' +
                 ", address=" + address +
                 ", staffType='" + staffType + '\'' +
-                '}';
+                '}' + "\n";
     }
 }
