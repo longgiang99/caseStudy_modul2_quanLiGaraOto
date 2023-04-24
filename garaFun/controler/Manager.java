@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Manager extends FactoryStaff implements Work, Serializable {
-    List<Staff> listStaff = new ArrayList<>();
+    List<Staff> listStaff ;
 
     public Manager() {
         listStaff = ReadToFile.readFile("garaFun.txt");
@@ -34,9 +34,9 @@ public class Manager extends FactoryStaff implements Work, Serializable {
         System.out.println(" enter name: ");
         String name = scanner.nextLine();
         System.out.println("enter age: ");
-        int age = scanner.nextInt();
+        int age =Integer.parseInt(scanner.nextLine());
         System.out.println("enter codeStaff: ");
-        int codeStaff = scanner.nextInt();
+        int codeStaff =Integer.parseInt(scanner.nextLine());
         FactoryStaff staffFactory = new FactoryStaff();
         Staff staff1 = staffFactory.getObject(staffType);
         checkCodeStaff(codeStaff);
@@ -78,7 +78,7 @@ public class Manager extends FactoryStaff implements Work, Serializable {
     public void display() {
 //        System.out.printf("%-10s %-20s %-20s\n", " PaintersCertificate ", '\t' + "  codeStaff  ", "  salary "," age "," name ", " address "," staffType ");
 //        ReadToFile.readFile("garaFun.txt");
-        sortToAge();
+//        sortToAge();
         System.out.println(listStaff);
     }
 
@@ -89,20 +89,22 @@ public class Manager extends FactoryStaff implements Work, Serializable {
     public void updateCodeStaff() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("hay nhap ma nhan vien can update code: ");
-        int codeStaff = scanner.nextInt();
-        try {
+        int codeStaff = Integer.parseInt(scanner.nextLine());
+boolean isExited = false;
             for (int i = 0; i < listStaff.size(); i++) {
                 if (listStaff.get(i).getCodeStaff() == codeStaff) {
+                    isExited =true;
                     System.out.println("hay nhap ma nhan vien moi: ");
-                    int newCodeStaff = scanner.nextInt();
+                    int newCodeStaff = Integer.parseInt(scanner.nextLine());
                     listStaff.get(i).setCodeStaff(newCodeStaff);
                     System.out.println("da thay doi ma nhan vien tu:" + codeStaff + "sang: " + newCodeStaff);
-                } else {
-                    System.out.println("khong co ma nhan vien nay");
                 }
             }
-        } catch (IndexOutOfBoundsException e) {
-        }
+            if(!isExited){
+                System.out.println("khong co ma nhan vien nay");
+
+            }
+
     }
 
     @Override
@@ -132,60 +134,64 @@ public class Manager extends FactoryStaff implements Work, Serializable {
     public void updateSalary() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("hay nhap ma nhan vien can cap nhat luong: ");
-        int codeStaff = scanner.nextInt();
-        try {
+        int codeStaff = Integer.parseInt(scanner.nextLine());
+        boolean isExited =false;
+
             for (int i = 0; i < listStaff.size(); i++) {
                 if (listStaff.get(i).getCodeStaff() == codeStaff) {
+                    isExited =true;
                     System.out.println("hay nhap muc luong moi: ");
-                    int newSalary = scanner.nextInt();
+                    int newSalary = Integer.parseInt(scanner.nextLine());
                     listStaff.get(i).setSalary(newSalary);
                     System.out.println("da thay doi luong thanh: " + newSalary);
-                } else {
-                    System.out.println("khong co ma nhan vien nay.");
                 }
             }
-        } catch (NumberFormatException e) {
+            if(!isExited){
+                System.out.println("khong co ma nhan vien nay.");
+
+            }
         }
-    }
+
 
     public void updateAge() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("hay nhap ma nhan vien can cap nhat tuoi: ");
-        int age = scanner.nextInt();
-        try {
-            for (int i = 0; i < listStaff.size(); i++) {
-                if (listStaff.get(i).getCodeStaff() == age) {
-                    System.out.println("hay nhap tuoi moi: ");
-                    int newAge = scanner.nextInt();
-                    listStaff.get(i).setSalary(newAge);
-                    System.out.println("da thay doi tuoi thanh: " + newAge);
-                } else {
-                    System.out.println("khong co ma nhan vien nay.");
-                }
+        int age = Integer.parseInt(scanner.nextLine());
+boolean isExited = false;
+        for (int i = 0; i < listStaff.size(); i++) {
+            if (listStaff.get(i).getCodeStaff() == age) {
+                isExited =true;
+                System.out.println("hay nhap tuoi moi: ");
+                int newAge = Integer.parseInt(scanner.nextLine());
+                listStaff.get(i).setSalary(newAge);
+                System.out.println("da thay doi tuoi thanh: " + newAge);
             }
-        } catch (NumberFormatException e) {
+        }
+        if(!isExited){
+            System.out.println("khong co ma nhan vien nay.");
+
         }
     }
 
     public void updateName() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("hay nhap ma nhan vien can cap nhat name: ");
-        int name = scanner.nextInt();
-        try {
-            for (int i = 0; i < listStaff.size(); i++) {
-                if (listStaff.get(i).getCodeStaff() == name) {
-                    System.out.println("hay nhap ten moi: ");
-                    int newName = scanner.nextInt();
-                    listStaff.get(i).setSalary(newName);
-                    System.out.println("da thay doi ten thanh: " + newName);
-                } else {
-                    System.out.println("khong co ma nhan vien nay.");
-                }
+        int codeStaff = Integer.parseInt(scanner.nextLine());
+        boolean isExited = false;
+        for (int i = 0; i < listStaff.size(); i++) {
+            if (listStaff.get(i).getCodeStaff() == codeStaff) {
+                isExited = true;
+                System.out.println("hay nhap ten moi: ");
+                String newName = scanner.nextLine();
+                listStaff.get(i).setName(newName);
+                System.out.println("da thay doi ten thanh: " + newName);
+                break;
             }
-        } catch (NumberFormatException e) {
+        }
+        if (!isExited) {
+            System.out.println("khong co ma nhan vien nay.");
         }
     }
-
 //    public void updateSalary() {
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("nhap ma nhan vien muon thay doi luong: ");
@@ -205,20 +211,24 @@ public class Manager extends FactoryStaff implements Work, Serializable {
     public void updateAdrress() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("hay nhap ma nhan vien can cap nhat dia chi: ");
-        int codeStaff = scanner.nextInt();
+        int codeStaff = Integer.parseInt(scanner.nextLine());
         Address address = new Address();
+        boolean isExited = false;
         System.out.println("hay nhap dia chi moi: ");
         for (int i = 0; i < listStaff.size(); i++) {
             if (listStaff.get(i).getCodeStaff() == codeStaff) {
+                isExited =true;
                 System.out.println("nhap ten duong: ");
                 String streetName = scanner.nextLine();
                 System.out.println("nhap ten quan: ");
                 String districName = scanner.nextLine();
                 address.setStreetName(streetName);
                 address.setDistricName(districName);
-            } else {
-                System.out.println("khong co ma nhan vien nay.");
+                listStaff.get(i).setAddress(address);
             }
+        }if(!isExited){
+            System.out.println("khong co ma nhan vien nay.");
+
         }
     }
 
@@ -231,6 +241,7 @@ public class Manager extends FactoryStaff implements Work, Serializable {
 
     public void sortToAge() {
         listStaff.sort(Comparator.comparing(Staff::getAge));
+        display();
     }
 
     public void findToName() {
@@ -241,7 +252,7 @@ public class Manager extends FactoryStaff implements Work, Serializable {
         for (int i = 0; i < listStaff.size(); i++) {
             if (listStaff.get(i).getName().equals(name)) {
                 isExisted = true;
-                System.out.println("thong tin nhan vien: "+ listStaff.get(i));
+                System.out.println("thong tin nhan vien: " + listStaff.get(i));
             }
         }
         if (!isExisted) {
