@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Manager extends FactoryStaff implements Work, Serializable {
-    List<Staff> listStaff ;
+    List<Staff> listStaff;
 
     public Manager() {
         listStaff = ReadToFile.readFile("garaFun.txt");
@@ -21,34 +21,47 @@ public class Manager extends FactoryStaff implements Work, Serializable {
     public void numberCar(int car) {
     }
 
+    @Override
+    public void addStaff(String staffType) {
+
+    }
+
     public void addStaff() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("nhap loai nhan vien:  M/ P/ E");
+        System.out.println("""
+                Hãy nhập loại nhân viên:
+                M: Thợ máy.
+                P: Thợ sơn.
+                E: Thợ điện.
+                """);
         String staffType;
         do {
             staffType = scanner.nextLine();
-            if (checkTypeStaff(staffType) == false) {
-                System.out.println("yeu cau nhap dung loai");
+            if (!checkTypeStaff(staffType)) {
+                System.out.println("Yêu cầu nhập đúng loại.");
             }
-        } while (checkTypeStaff(staffType) == false);
-        System.out.println(" enter name: ");
+        } while (!checkTypeStaff(staffType));
+        System.out.println("Nhập tên: ");
         String name = scanner.nextLine();
-        System.out.println("enter age: ");
-        int age =Integer.parseInt(scanner.nextLine());
-        System.out.println("enter codeStaff: ");
-        int codeStaff =Integer.parseInt(scanner.nextLine());
+        System.out.println("Nhập tuổi: ");
+        int age = Integer.parseInt(scanner.nextLine());
+        System.out.println("Nhập mã nhân viên: ");
+        int codeStaff = Integer.parseInt(scanner.nextLine());
         FactoryStaff staffFactory = new FactoryStaff();
+
         Staff staff1 = staffFactory.getObject(staffType);
         checkCodeStaff(codeStaff);
         if (checkCodeStaff(codeStaff)) {
-            System.out.println("da ton tai ma nhan vien nay, vui long them lai nhan vien voi ma nhan vien khac");
+            System.out.println("Đã tồn tại mã nhân viên này, hãy thêm lại nhân viên với mã nhân viên khác.");
         } else {
             staff1.setName(name);
             staff1.setAge(age);
             staff1.setCodeStaff(codeStaff);
+            staff1.setStaffType(staffType);
             listStaff.add(staff1);
         }
     }
+
 
     public boolean checkCodeStaff(int codeStaff) {
         boolean check = false;
@@ -63,48 +76,63 @@ public class Manager extends FactoryStaff implements Work, Serializable {
 
     public boolean checkTypeStaff(String staffType) {
         TypeValidator typeValidator = new TypeValidator();
-        boolean input = typeValidator.validate(staffType);
-        return input;
+        return typeValidator.validate(staffType);
+
     }
 
     public void saveListStaff() {
         WriterToFile.writerFile(listStaff);
     }
-//    public void displayDemo(){
-//        for (Staff staff : listStaff) {
-//            System.out.println(staff);
-//    }
+
 
     public void display() {
-//        System.out.printf("%-10s %-20s %-20s\n", " PaintersCertificate ", '\t' + "  codeStaff  ", "  salary "," age "," name ", " address "," staffType ");
-//        ReadToFile.readFile("garaFun.txt");
-//        sortToAge();
         System.out.println(listStaff);
     }
 
     @Override
     public void updateStaff() {
     }
-
+    public void updateStaffType(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Hãy nhập mã nhân viên cần cập nhật loại: ");
+        int codeStaff = Integer.parseInt(scanner.nextLine());
+        boolean isExited = false;
+        for (Staff staff : listStaff) {
+            if (staff.getCodeStaff() == codeStaff) {
+                isExited = true;
+                System.out.println("Hãy nhập loại nhân viên mới: P/E/M");
+                String staffType;
+                do {
+                    staffType = scanner.nextLine();
+                    if (!checkTypeStaff(staffType)) {
+                        System.out.println("Yêu cầu nhập đúng loại.");
+                    }
+                } while (!checkTypeStaff(staffType));
+                staff.setStaffType(staffType);
+                System.out.println("Đã thay đổi loại nhân viên thành: " +staffType);
+            }
+        }
+        if (!isExited) {
+            System.out.println("Không có mã nhân viên này.");
+        }
+    }
     public void updateCodeStaff() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("hay nhap ma nhan vien can update code: ");
+        System.out.println("Hãy nhập mã nhân viên cần cập nhật mã mới: ");
         int codeStaff = Integer.parseInt(scanner.nextLine());
-boolean isExited = false;
-            for (int i = 0; i < listStaff.size(); i++) {
-                if (listStaff.get(i).getCodeStaff() == codeStaff) {
-                    isExited =true;
-                    System.out.println("hay nhap ma nhan vien moi: ");
-                    int newCodeStaff = Integer.parseInt(scanner.nextLine());
-                    listStaff.get(i).setCodeStaff(newCodeStaff);
-                    System.out.println("da thay doi ma nhan vien tu:" + codeStaff + "sang: " + newCodeStaff);
-                }
+        boolean isExited = false;
+        for (Staff staff : listStaff) {
+            if (staff.getCodeStaff() == codeStaff) {
+                isExited = true;
+                System.out.println("Hãy nhập mã nhân viên mới: ");
+                int newCodeStaff = Integer.parseInt(scanner.nextLine());
+                staff.setCodeStaff(newCodeStaff);
+                System.out.println("Đã thay đổi mã nhân viên từ:" + codeStaff + "sang: " + newCodeStaff);
             }
-            if(!isExited){
-                System.out.println("khong co ma nhan vien nay");
-
-            }
-
+        }
+        if (!isExited) {
+            System.out.println("Không có tên nhân viên này.");
+        }
     }
 
     @Override
@@ -120,6 +148,7 @@ boolean isExited = false;
                     break;
                 } else {
                     System.out.println("khong co ten nhan vien nay.");
+                    break;
                 }
             }
             if (index >= 0) {
@@ -133,63 +162,63 @@ boolean isExited = false;
 
     public void updateSalary() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("hay nhap ma nhan vien can cap nhat luong: ");
+        System.out.println("Hãy nhập mã nhân viên cần cập nhật lương: ");
         int codeStaff = Integer.parseInt(scanner.nextLine());
-        boolean isExited =false;
+        boolean isExited = false;
 
-            for (int i = 0; i < listStaff.size(); i++) {
-                if (listStaff.get(i).getCodeStaff() == codeStaff) {
-                    isExited =true;
-                    System.out.println("hay nhap muc luong moi: ");
-                    int newSalary = Integer.parseInt(scanner.nextLine());
-                    listStaff.get(i).setSalary(newSalary);
-                    System.out.println("da thay doi luong thanh: " + newSalary);
-                }
-            }
-            if(!isExited){
-                System.out.println("khong co ma nhan vien nay.");
-
+        for (Staff staff : listStaff) {
+            if (staff.getCodeStaff() == codeStaff) {
+                isExited = true;
+                System.out.println("Hãy nhập mức lương mới: ");
+                int newSalary = Integer.parseInt(scanner.nextLine());
+                staff.setSalary(newSalary);
+                System.out.println("Đã thay đổi lương thành: " + newSalary);
             }
         }
+        if (!isExited) {
+            System.out.println("Không có mã nhân viên này.");
+
+        }
+    }
 
 
     public void updateAge() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("hay nhap ma nhan vien can cap nhat tuoi: ");
+        System.out.println("Hãy nhập mã nhân viên cần cập nhật tuổi: ");
         int age = Integer.parseInt(scanner.nextLine());
-boolean isExited = false;
-        for (int i = 0; i < listStaff.size(); i++) {
-            if (listStaff.get(i).getCodeStaff() == age) {
-                isExited =true;
-                System.out.println("hay nhap tuoi moi: ");
+        boolean isExited = false;
+        for (Staff staff : listStaff) {
+            if (staff.getCodeStaff() == age) {
+                isExited = true;
+                System.out.println("Hãy nhập tuổi mới: ");
                 int newAge = Integer.parseInt(scanner.nextLine());
-                listStaff.get(i).setSalary(newAge);
-                System.out.println("da thay doi tuoi thanh: " + newAge);
+                staff.setSalary(newAge);
+                System.out.println("Đã thay đổi tuổi thành: " + newAge);
             }
         }
-        if(!isExited){
-            System.out.println("khong co ma nhan vien nay.");
+        if (!isExited) {
+            System.out.println("Không có mã nhân viên này.");
 
         }
     }
 
     public void updateName() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("hay nhap ma nhan vien can cap nhat name: ");
+        System.out.println("Hãy nhập mã nhân viên cần cập nhật tên: ");
         int codeStaff = Integer.parseInt(scanner.nextLine());
         boolean isExited = false;
-        for (int i = 0; i < listStaff.size(); i++) {
-            if (listStaff.get(i).getCodeStaff() == codeStaff) {
+        for (Staff staff : listStaff) {
+            if (staff.getCodeStaff() == codeStaff) {
                 isExited = true;
-                System.out.println("hay nhap ten moi: ");
+                System.out.println("Hãy nhập tên mới: ");
                 String newName = scanner.nextLine();
-                listStaff.get(i).setName(newName);
-                System.out.println("da thay doi ten thanh: " + newName);
+                staff.setName(newName);
+                System.out.println("Đã thay đổi tên thành: " + newName);
                 break;
             }
         }
         if (!isExited) {
-            System.out.println("khong co ma nhan vien nay.");
+            System.out.println("Không có mã nhân viên này.");
         }
     }
 //    public void updateSalary() {
@@ -210,31 +239,30 @@ boolean isExited = false;
 
     public void updateAdrress() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("hay nhap ma nhan vien can cap nhat dia chi: ");
+        System.out.println("Hãy nhập mã nhân viên cần cập nhật địa chỉ: ");
         int codeStaff = Integer.parseInt(scanner.nextLine());
         Address address = new Address();
         boolean isExited = false;
-        System.out.println("hay nhap dia chi moi: ");
-        for (int i = 0; i < listStaff.size(); i++) {
-            if (listStaff.get(i).getCodeStaff() == codeStaff) {
-                isExited =true;
-                System.out.println("nhap ten duong: ");
+        System.out.println("Hãy nhập địa chỉ mới: ");
+        for (Staff staff : listStaff) {
+            if (staff.getCodeStaff() == codeStaff) {
+                isExited = true;
+                System.out.println("Nhập tên đường: ");
                 String streetName = scanner.nextLine();
-                System.out.println("nhap ten quan: ");
+                System.out.println("Nhập tên quận: ");
                 String districName = scanner.nextLine();
                 address.setStreetName(streetName);
                 address.setDistricName(districName);
-                listStaff.get(i).setAddress(address);
+                staff.setAddress(address);
             }
-        }if(!isExited){
-            System.out.println("khong co ma nhan vien nay.");
+        }
+        if (!isExited) {
+            System.out.println("Không có mã nhân viên này.");
 
         }
     }
 
-    //public void softToSalary(){
-//        listStaff.sort();
-//}
+
     @Override
     public void salarySetup() {
     }
@@ -246,17 +274,17 @@ boolean isExited = false;
 
     public void findToName() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("nhap ten nv can tim.");
+        System.out.println("Nhập tên nhân viên cần tìm.");
         String name = scanner.nextLine();
         boolean isExisted = false;
-        for (int i = 0; i < listStaff.size(); i++) {
-            if (listStaff.get(i).getName().equals(name)) {
+        for (Staff staff : listStaff) {
+            if (staff.getName().equals(name)) {
                 isExisted = true;
-                System.out.println("thong tin nhan vien: " + listStaff.get(i));
+                System.out.println("Thông tin nhân viên: " + staff);
             }
         }
         if (!isExisted) {
-            System.out.println("khong co ten nhan vien nay.");
+            System.out.println("Không có tên nhân viên này.");
         }
     }
 

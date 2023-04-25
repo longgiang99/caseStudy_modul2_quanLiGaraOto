@@ -7,6 +7,7 @@ import model.Staff;
 
 public class FactoryStaff {
     public Staff getObject(String staffType) {
+        try{
         switch (staffType) {
             case "M":
                 return new Mechanic();
@@ -16,7 +17,8 @@ public class FactoryStaff {
                 return new Painter();
             default:
                 return null;
-
         }
+        }catch (NullPointerException e){}
+        return null;
     }
 }
